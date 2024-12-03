@@ -1,0 +1,11 @@
+Options -Multiviews
+
+RewriteEngine On
+RewriteRule ^test$ test.php [L]
+
+# Hanya rewrite jika bukan folder atau file yang ada
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Redirect semua request ke index.php
+RewriteRule ^(.*)$ index.php?url=$1 [L]
