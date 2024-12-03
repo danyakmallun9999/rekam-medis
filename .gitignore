@@ -3,7 +3,6 @@ node_modules/
 
 # Vendor dependencies (Composer)
 vendor/
-composer.lock
 
 
 # File yang tidak perlu
