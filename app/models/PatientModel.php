@@ -56,4 +56,27 @@ class PatientModel
     {
         $this->collection->insertOne($patientData);
     }
+
+    public function getPatientById($id)
+    {
+        return $this->collection->findOne(['_id' => $id]);
+    }
+
+    public function updatePatient($id, $data)
+    {
+        $this->collection->updateOne(
+            ['_id' => $id],
+            ['$set' => $data]
+        );
+    }
+
+    public function searchPatients()
+    {
+        $search = $_POST["search"];
+        // Filter berdasarkan nama pasien
+        $patients = $this->collection->find([
+            'name' => new \MongoDB\BSON\Regex($search, 'i') // 'i' untuk case-insensitive search
+        ]);
+        return iterator_to_array($patients); // Konversi hasil ke array
+    }
 }

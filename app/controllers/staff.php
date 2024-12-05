@@ -32,6 +32,7 @@ class Staff extends Controller
         $this->render('staff/daftar_pasien', $data);
     }
 
+
     public function tambah_pasien()
     {
         $data["judul"] = "Tambah Pasien";
@@ -75,5 +76,67 @@ class Staff extends Controller
         // Redirect ke halaman daftar pasien
         header('Location: ' . BASEURL . '/staff/daftar_pasien');
         exit;
+    }
+
+    public function edit_pasien($id)
+    {
+        $model = $this->model('PatientModel');
+
+        // Ambil data pasien berdasarkan ID
+        $patient = $model->getPatientById($id);
+
+        // Jika data pasien tidak ditemukan, redirect ke daftar pasien
+        if (!$patient) {
+            header('Location: ' . BASEURL . '/staff/daftar_pasien');
+            exit;
+        }
+
+        // Siapkan data untuk view
+        $data["judul"] = "Edit Pasien";
+        $data["user"] = "Staff Pendaftaran";
+        $data["patient"] = $patient;
+
+        $this->render('staff/edit_pasien', $data);
+    }
+
+    public function updatePatient()
+    {
+        $model = $this->model('PatientModel');
+
+        // Ambil data dari form
+        $data = [
+            'name' => $_POST['full_name'],
+            'birth_date' => new UTCDateTime(strtotime($_POST['birth_date']) * 1000),
+            'gender' => $_POST['gender'],
+            'contact_number' => $_POST['contact_number'],
+            'address' => $_POST['address'],
+        ];
+
+        // Update data pasien
+        $model->updatePatient($_POST['_id'], $data);
+
+        // Redirect ke halaman daftar pasien
+        header('Location: ' . BASEURL . '/staff/daftar_pasien');
+        exit;
+    }
+
+    public function search_patients()
+    {
+        $model = $this->model('PatientModel');
+
+        // Ambil parameter pencarian
+        // $name = isset($_GET['query']) ? $_GET['query'] : '';
+        // $gender = isset($_GET['gender']) ? $_GET['gender'] : '';
+        // $ageRange = isset($_GET['ageRange']) ? $_GET['ageRange'] : '';
+
+        // Cari data pasien berdasarkan filter
+        $patients = $model->searchPatients();
+
+        $data["judul"] = "Daftar Pasien";
+        $data["user"] = "Staff Pendaftaran";
+        $data["patients"] = $patients;
+
+        // Render tampilan daftar pasien
+        $this->render('staff/daftar_pasien', $data);
     }
 }

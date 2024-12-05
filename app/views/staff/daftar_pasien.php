@@ -7,10 +7,7 @@
       </li>
       <li><i class="fas fa-chevron-right text-gray-400 mx-2"></i></li>
       <li class="text-blue-600">Daftar Pasien</li>
-      <li><i class="fas fa-chevron-right text-gray-400 mx-2"></i></li>
       <li>
-        <a href="<?= BASEURL; ?>/staff/tambah_pasien" class="text-gray-500 hover:text-gray-700">Tambah Pasien</a>
-      </li>
     </ol>
   </nav>
 </div>
@@ -19,44 +16,39 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
   <!-- Search and Filters -->
   <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
-    <div
-      class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-      <div class="flex-1">
-        <div class="relative">
-          <input
-            type="text"
-            placeholder="Cari pasien..."
-            class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
-          <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+    <form id="searchForm" method="POST" action="<?= BASEURL; ?>/staff/search_patients" class="mb-2">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex-1">
+          <div class="relative">
+            <input
+              type="text"
+              name="search"
+              id="searchInput"
+              placeholder="Cari pasien..."
+              value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>"
+              class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
+            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-4">
+
+          <button id="cari" type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
+            <i class="fas fa-search mr-2"></i>Cari
+          </button>
         </div>
       </div>
-      <div class="flex flex-wrap gap-4">
-        <select
-          class="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
-          <option value="">Semua Gender</option>
-          <option value="Male">Laki-laki</option>
-          <option value="Female">Perempuan</option>
-        </select>
-        <select
-          class="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
-          <option value="">Rentang Usia</option>
-          <option value="0-20">0-20 tahun</option>
-          <option value="21-40">21-40 tahun</option>
-          <option value="41+">41+ tahun</option>
-        </select>
-        <a href="<?= BASEURL; ?>/staff/tambah_pasien">
-          <button
-            class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
-            <i class="fas fa-user-plus mr-2"></i>Pasien Baru
-          </button>
-        </a>
-        <button
-          class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600">
-          <i class="fas fa-print mr-2"></i>Cetak
-        </button>
-      </div>
-    </div>
+    </form>
+
+    <a href="<?= BASEURL; ?>/staff/tambah_pasien">
+      <button
+        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
+        <i class="fas fa-user-plus mr-2"></i>Pasien Baru
+      </button>
+    </a>
   </div>
+
+
+
 
   <!-- Patient Table -->
   <div class="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -125,9 +117,12 @@
                   title="Hapus">
                   <i class="fas fa-trash"></i>
                 </a>
-                <a href="#" class="text-yellow-600 hover:text-yellow-900" title="Edit">
+                <a href="<?= BASEURL; ?>/staff/edit_pasien/<?= $patient['_id']; ?>"
+                  class="text-yellow-600 hover:text-yellow-900"
+                  title="Edit">
                   <i class="fas fa-edit"></i>
                 </a>
+
               </td>
             </tr>
           <?php endforeach; ?>
