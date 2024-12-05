@@ -7,6 +7,10 @@
       </li>
       <li><i class="fas fa-chevron-right text-gray-400 mx-2"></i></li>
       <li class="text-blue-600">Daftar Pasien</li>
+      <li><i class="fas fa-chevron-right text-gray-400 mx-2"></i></li>
+      <li>
+        <a href="<?= BASEURL; ?>/staff/tambah_pasien" class="text-gray-500 hover:text-gray-700">Tambah Pasien</a>
+      </li>
     </ol>
   </nav>
 </div>
@@ -40,10 +44,12 @@
           <option value="21-40">21-40 tahun</option>
           <option value="41+">41+ tahun</option>
         </select>
-        <button
-          class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
-          <i class="fas fa-user-plus mr-2"></i>Pasien Baru
-        </button>
+        <a href="<?= BASEURL; ?>/staff/tambah_pasien">
+          <button
+            class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
+            <i class="fas fa-user-plus mr-2"></i>Pasien Baru
+          </button>
+        </a>
         <button
           class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600">
           <i class="fas fa-print mr-2"></i>Cetak
@@ -113,16 +119,15 @@
                 <div class="text-sm text-gray-900"><?= $patient["address"]; ?></div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <button
-                  class="text-blue-600 hover:text-blue-900 mr-3"
-                  title="Detail">
-                  <i class="fas fa-eye"></i>
-                </button>
-                <button
-                  class="text-yellow-600 hover:text-yellow-900"
-                  title="Edit">
+                <a href="<?= BASEURL; ?>/staff/hapus_pasien/<?= $patient["_id"]; ?>"
+                  onclick="return confirm('Apakah Anda yakin ingin menghapus pasien ini?')"
+                  class="text-red-600 hover:text-red-900 mr-3"
+                  title="Hapus">
+                  <i class="fas fa-trash"></i>
+                </a>
+                <a href="#" class="text-yellow-600 hover:text-yellow-900" title="Edit">
                   <i class="fas fa-edit"></i>
-                </button>
+                </a>
               </td>
             </tr>
           <?php endforeach; ?>
