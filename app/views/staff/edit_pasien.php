@@ -94,7 +94,7 @@
             <!-- Buttons -->
             <div class="flex justify-end space-x-4">
                 <a href="<?= BASEURL; ?>/staff/daftar_pasien" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-gray-300">Batal</a>
-                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Simpan</button>
+                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Ubah Data</button>
             </div>
         </form>
 

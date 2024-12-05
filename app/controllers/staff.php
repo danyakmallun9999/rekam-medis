@@ -6,18 +6,30 @@ class Staff extends Controller
 {
     public function index()
     {
-        $model = $this->model('PatientModel');
-        $data["patient_count"] = $model->getPatientCount();
+        $appointmentsModel = $this->model('AppointmentsModel');
 
-        $data["judul"] = "Halaman Staff Pendaftaran";
+        $model = $this->model('PatientModel');
+
+        $data["patient_count"] = $model->getPatientCount();
+        $data["appointment_count"] = $appointmentsModel->getAppointmentsCount();
+        $data["judul"] = "Staff Pendaftaran";
         $data["user"] = "Staff Pendaftaran";
         $this->render('staff/index', $data);
     }
 
     public function janji_temu()
     {
+        $appointmentsModel = $this->model('AppointmentsModel');
+        $appointments = $appointmentsModel->getAppointments();
+
+        $model = $this->model('DoctorModel');
+        $doctors = $model->getAllDoctors();
+
         $data["judul"] = "Janji Temu";
         $data["user"] = "Petugas Pendaftaran";
+        $data["doctors"] = $doctors;
+        $data["appointments"] = $appointments;
+
         $this->render('staff/janji_temu', $data);
     }
 
@@ -49,6 +61,18 @@ class Staff extends Controller
 
         // Redirect kembali ke halaman daftar pasien
         header('Location: ' . BASEURL . '/staff/daftar_pasien');
+        exit;
+    }
+
+    public function hapus_appointment($id)
+    {
+        $model = $this->model('AppointmentsModel');
+
+        // Hapus pasien berdasarkan ID
+        $model->deleteAppointment($id);
+
+        // Redirect kembali ke halaman daftar pasien
+        header('Location: ' . BASEURL . '/staff/janji_temu');
         exit;
     }
 

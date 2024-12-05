@@ -21,7 +21,7 @@
                 </div>
                 <div class="ml-4">
                     <h2 class="text-sm font-medium text-gray-600">Pasien Hari Ini</h2>
-                    <p class="text-2xl font-semibold text-gray-900">15</p>
+                    <p class="text-2xl font-semibold text-gray-900"><?= $data["appointment_count"]; ?></p>
                 </div>
             </div>
             <div class="mt-4">

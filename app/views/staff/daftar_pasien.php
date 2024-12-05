@@ -38,7 +38,7 @@
         </div>
       </div>
     </form>
-
+    <hr class="mb-2">
     <a href="<?= BASEURL; ?>/staff/tambah_pasien">
       <button
         class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
@@ -122,7 +122,6 @@
                   title="Edit">
                   <i class="fas fa-edit"></i>
                 </a>
-
               </td>
             </tr>
           <?php endforeach; ?>
