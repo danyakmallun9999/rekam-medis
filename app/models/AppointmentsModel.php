@@ -169,8 +169,8 @@ class AppointmentsModel
     public function updateAppointment($id, $data)
     {
         $updateData = [
-            'patient_id' => new MongoDB\BSON\ObjectId($data['patient_id']),
-            'doctor_id' => new MongoDB\BSON\ObjectId($data['doctor_id']),
+            'patient_id' => $data['patient_id'],
+            'doctor_id' => $data['doctor_id'],
             'appointment_date' => $data['appointment_date'],
             'appointment_time' => [
                 'start' => $data['start_time'],
@@ -181,7 +181,7 @@ class AppointmentsModel
         ];
 
         $this->collection->updateOne(
-            ['_id' => new MongoDB\BSON\ObjectId($data[$id])],
+            ['_id' => new MongoDB\BSON\ObjectId($id)],
             ['$set' => $updateData]
         );
     }

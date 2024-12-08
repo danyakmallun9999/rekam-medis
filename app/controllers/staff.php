@@ -149,11 +149,6 @@ class Staff extends Controller
     {
         $model = $this->model('PatientModel');
 
-        // Ambil parameter pencarian
-        // $name = isset($_GET['query']) ? $_GET['query'] : '';
-        // $gender = isset($_GET['gender']) ? $_GET['gender'] : '';
-        // $ageRange = isset($_GET['ageRange']) ? $_GET['ageRange'] : '';
-
         // Cari data pasien berdasarkan filter
         $patients = $model->searchPatients();
 
@@ -212,10 +207,9 @@ class Staff extends Controller
         $model = $this->model('AppointmentsModel');
 
         $data = [
-            'id' => $_POST['id'],
             'patient_id' => $_POST['patient_id'],
             'doctor_id' => $_POST['doctor_id'],
-            'appointment_date' => $_POST['appointment_date'],
+            'appointment_date' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['appointment_date']) * 1000),
             'start_time' => $_POST['start_time'],
             'end_time' => $_POST['end_time'],
             'status' => $_POST['status'],
@@ -226,7 +220,7 @@ class Staff extends Controller
         $model->updateAppointment($_POST['_id'], $data);
 
         // Redirect ke halaman daftar pasien
-        header('Location: ' . BASEURL . '/staff/daftar_pasien');
+        header('Location: ' . BASEURL . '/staff/janji_temu');
         exit;
     }
 

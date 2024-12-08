@@ -21,7 +21,7 @@
 
         <?php foreach ($data['appointments'] as $appointment) : ?>
             <form action="<?= BASEURL; ?>/staff/updateAppointment" method="POST">
-
+                <input type="hidden" name="_id" value="<?= $appointment['_id']; ?>">
                 <div class="space-y-6">
                     <!-- Patient Selection -->
                     <div>
@@ -33,7 +33,7 @@
                             name="patient_id"
                             required
                             class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-                            <option value="bismillah"><?= $appointment['patient']['name']; ?></option>
+                            <option value=""><?= $appointment['patient']['name']; ?></option>
                             <?php foreach ($data["patients"] as $patient): ?>
                                 <option value="<?= $patient['_id']; ?>"><?= $patient['name']; ?></option>
                             <?php endforeach; ?>
@@ -50,7 +50,7 @@
                             name="doctor_id"
                             required
                             class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-                            <option value="bismillah"><?= $appointment['doctor']['name']; ?></option>
+                            <option value=""><?= $appointment['doctor']['name']; ?></option>
                             <?php foreach ($data['doctors'] as $doctor): ?>
                                 <option value="<?= $doctor['_id']; ?>"><?= $doctor['name']; ?></option>
                             <?php endforeach; ?>
