@@ -6,6 +6,7 @@
       </li>
       <li><i class="fas fa-chevron-right text-gray-400 mx-2"></i></li>
       <li class="text-blue-600">Janji Temu Pasien</li>
+      <li>
     </ol>
   </nav>
 </div>
@@ -43,32 +44,35 @@
 
   <!-- Search and Filters -->
   <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="relative">
-        <input
-          type="text"
-          placeholder="Cari janji temu..."
-          class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
-        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+    <form id="searchForm" method="POST" action="<?= BASEURL; ?>/staff/search_appointment" class="mb-2">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex-1">
+          <div class="relative">
+            <input
+              type="text"
+              name="search"
+              id="searchInput"
+              placeholder="Cari janji temu..."
+              value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>"
+              class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
+            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-4">
+
+          <button id="cari" type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
+            <i class="fas fa-search mr-2"></i>Cari
+          </button>
+        </div>
       </div>
-      <select
-        class="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
-        <option value="">Semua Dokter</option>
-        <option value="DOC-001">Dr. Emily Carter - Cardiology</option>
-        <option value="DOC-002">Dr. Michael Brown - Dermatology</option>
-      </select>
-      <select
-        class="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
-        <option value="">Semua Status</option>
-        <option value="waiting">Tunggu Konfirmasi</option>
-        <option value="confirmed">Dikonfirmasi</option>
-        <option value="completed">Selesai</option>
-      </select>
+    </form>
+    <hr class="mb-2">
+    <a href="<?= BASEURL; ?>/staff/tambah_janji_temu">
       <button
-        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 flex items-center justify-center">
-        <i class="fas fa-plus mr-2"></i>Janji Temu Baru
+        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
+        <i class="fas fa-user-plus mr-2"></i>Janji Temu Baru
       </button>
-    </div>
+    </a>
   </div>
 
   <!-- Appointments Table -->
@@ -138,7 +142,7 @@
                   title="Hapus">
                   <i class="fas fa-trash"></i>
                 </a>
-                <a href="<?= BASEURL; ?>/staff/edit_pasien/<?= $appointment['_id']; ?>"
+                <a href="<?= BASEURL; ?>/staff/edit_appointment/<?= $appointment['_id']; ?>"
                   class="text-yellow-600 hover:text-yellow-900"
                   title="Edit">
                   <i class="fas fa-edit"></i>
