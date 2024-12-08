@@ -2,133 +2,129 @@
 
 use MongoDB\BSON\UTCDateTime;
 
+/**
+ * Class Staff
+ * Controller untuk menangani fitur-fitur pada halaman Staff Pendaftaran
+ */
 class Staff extends Controller
 {
+    /**
+     * Halaman utama staff
+     */
     public function index()
     {
         $appointmentsModel = $this->model('AppointmentsModel');
+        $patientModel = $this->model('PatientModel');
 
-        $model = $this->model('PatientModel');
+        $data = [
+            "patient_count" => $patientModel->getPatientCount(),
+            "appointment_count" => $appointmentsModel->getAppointmentsCount(),
+            "judul" => "Staff Pendaftaran",
+            "user" => "Staff Pendaftaran",
+        ];
 
-        $data["patient_count"] = $model->getPatientCount();
-        $data["appointment_count"] = $appointmentsModel->getAppointmentsCount();
-        $data["judul"] = "Staff Pendaftaran";
-        $data["user"] = "Staff Pendaftaran";
         $this->render('staff/index', $data);
     }
 
+    /**
+     * Halaman daftar janji temu
+     */
     public function janji_temu()
     {
         $appointmentsModel = $this->model('AppointmentsModel');
-        $appointments = $appointmentsModel->getAppointments();
+        $doctorModel = $this->model('DoctorModel');
 
-        $model = $this->model('DoctorModel');
-        $doctors = $model->getAllDoctors();
-
-        $data["judul"] = "Janji Temu";
-        $data["user"] = "Petugas Pendaftaran";
-        $data["doctors"] = $doctors;
-        $data["appointments"] = $appointments;
+        $data = [
+            "judul" => "Janji Temu",
+            "user" => "Petugas Pendaftaran",
+            "doctors" => $doctorModel->getAllDoctors(),
+            "appointments" => $appointmentsModel->getAppointments(),
+        ];
 
         $this->render('staff/janji_temu', $data);
     }
 
+    /**
+     * Halaman daftar pasien
+     */
     public function daftar_pasien()
     {
-        $model = $this->model('PatientModel');
-        $patients = $model->getAllPatients();
+        $patientModel = $this->model('PatientModel');
 
-        $data["judul"] = "Daftar Pasien";
-        $data["user"] = "Staff Pendaftaran";
-        $data["patients"] = $patients;
+        $data = [
+            "judul" => "Daftar Pasien",
+            "user" => "Staff Pendaftaran",
+            "patients" => $patientModel->getAllPatients(),
+        ];
+
         $this->render('staff/daftar_pasien', $data);
     }
 
-
+    /**
+     * Halaman untuk menambah pasien baru
+     */
     public function tambah_pasien()
     {
-        $data["judul"] = "Tambah Pasien";
-        $data["user"] = "Staff Pendaftaran";
+        $data = [
+            "judul" => "Tambah Pasien",
+            "user" => "Staff Pendaftaran",
+        ];
+
         $this->render('staff/tambah_pasien', $data);
     }
 
-    public function hapus_pasien($id)
-    {
-        $model = $this->model('PatientModel');
-
-        // Hapus pasien berdasarkan ID
-        $model->deletePatient($id);
-
-        // Redirect kembali ke halaman daftar pasien
-        header('Location: ' . BASEURL . '/staff/daftar_pasien');
-        exit;
-    }
-
-    public function hapus_appointment($id)
-    {
-        $model = $this->model('AppointmentsModel');
-
-        // Hapus pasien berdasarkan ID
-        $model->deleteAppointment($id);
-
-        // Redirect kembali ke halaman daftar pasien
-        header('Location: ' . BASEURL . '/staff/janji_temu');
-        exit;
-    }
-
+    /**
+     * Menambah pasien ke dalam database
+     */
     public function addPatient()
     {
-        // Ambil model
-        $model = $this->model('PatientModel');
+        $patientModel = $this->model('PatientModel');
 
-        // Generate _id custom
-        $customId = $model->generateCustomId();
-
-        // Ambil data dari form
+        $customId = $patientModel->generateCustomId();
         $data = [
             '_id' => $customId,
             'name' => $_POST['full_name'],
-            'birth_date' => new UTCDateTime(strtotime($_POST['birth_date']) * 1000), // Konversi ke UTCDateTime
+            'birth_date' => new UTCDateTime(strtotime($_POST['birth_date']) * 1000),
             'gender' => $_POST['gender'],
             'contact_number' => $_POST['contact_number'],
             'address' => $_POST['address'],
         ];
 
-        // Simpan ke database
-        $model->addPatient($data);
+        $patientModel->addPatient($data);
 
-        // Redirect ke halaman daftar pasien
         header('Location: ' . BASEURL . '/staff/daftar_pasien');
         exit;
     }
 
+    /**
+     * Halaman untuk mengedit data pasien
+     */
     public function edit_pasien($id)
     {
-        $model = $this->model('PatientModel');
+        $patientModel = $this->model('PatientModel');
+        $patient = $patientModel->getPatientById($id);
 
-        // Ambil data pasien berdasarkan ID
-        $patient = $model->getPatientById($id);
-
-        // Jika data pasien tidak ditemukan, redirect ke daftar pasien
         if (!$patient) {
             header('Location: ' . BASEURL . '/staff/daftar_pasien');
             exit;
         }
 
-        // Siapkan data untuk view
-        $data["judul"] = "Edit Pasien";
-        $data["user"] = "Staff Pendaftaran";
-        $data["patient"] = $patient;
+        $data = [
+            "judul" => "Edit Pasien",
+            "user" => "Staff Pendaftaran",
+            "patient" => $patient,
+        ];
 
         $this->render('staff/edit_pasien', $data);
     }
 
-
+    /**
+     * Memperbarui data pasien di database
+     */
     public function updatePatient()
     {
-        $model = $this->model('PatientModel');
+        $patientModel = $this->model('PatientModel');
 
-        // Ambil data dari form
         $data = [
             'name' => $_POST['full_name'],
             'birth_date' => new UTCDateTime(strtotime($_POST['birth_date']) * 1000),
@@ -137,127 +133,159 @@ class Staff extends Controller
             'address' => $_POST['address'],
         ];
 
-        // Update data pasien
-        $model->updatePatient($_POST['_id'], $data);
+        $patientModel->updatePatient($_POST['_id'], $data);
 
-        // Redirect ke halaman daftar pasien
         header('Location: ' . BASEURL . '/staff/daftar_pasien');
         exit;
     }
 
-    public function search_patients()
+    /**
+     * Menghapus data pasien dari database
+     */
+    public function hapus_pasien($id)
     {
-        $model = $this->model('PatientModel');
-
-        // Cari data pasien berdasarkan filter
-        $patients = $model->searchPatients();
-
-        $data["judul"] = "Daftar Pasien";
-        $data["user"] = "Staff Pendaftaran";
-        $data["patients"] = $patients;
-
-        // Render tampilan daftar pasien
-        $this->render('staff/daftar_pasien', $data);
-    }
-
-    public function search_appointment()
-    {
-        $doctorModel = $this->model('DoctorModel');
-        $doctors = $doctorModel->getAllDoctors();
-
-        $appointmentModel = $this->model('AppointmentsModel');
-        $appointments = $appointmentModel->searchAppointment();
-
-        $data["judul"] = "Janji Temu";
-        $data["user"] = "Petugas Pendaftaran";
-        $data['doctors'] = $doctors;
-        $data["appointments"] = $appointments;
-
-        $this->render('staff/janji_temu', $data);
-    }
-
-    public function edit_appointment($id)
-    {
-        $appointmentsModel = $this->model('AppointmentsModel');
-        $appointments = $appointmentsModel->getAppointmentById($id);
-
-        if (!$appointments) {
-            header('Location: ' . BASEURL . '/staff/janji_temu');
-            exit;
-        }
-
-        $doctorModel = $this->model('DoctorModel');
-        $doctors = $doctorModel->getAllDoctors();
         $patientModel = $this->model('PatientModel');
-        $patients = $patientModel->getAllPatients();
-        $data["judul"] = "Janji Temu";
-        $data["user"] = "Petugas Pendaftaran";
+        $patientModel->deletePatient($id);
 
-
-        $data["patients"] = $patients;
-        $data["doctors"] = $doctors;
-        $data["appointments"] = $appointments;
-
-
-        $this->render('staff/edit_appointment', $data);
-    }
-
-    public function updateAppointment()
-    {
-        $model = $this->model('AppointmentsModel');
-
-        $data = [
-            'patient_id' => $_POST['patient_id'],
-            'doctor_id' => $_POST['doctor_id'],
-            'appointment_date' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['appointment_date']) * 1000),
-            'start_time' => $_POST['start_time'],
-            'end_time' => $_POST['end_time'],
-            'status' => $_POST['status'],
-            'notes' => $_POST['notes']
-        ];
-
-        // Update data pasien
-        $model->updateAppointment($_POST['_id'], $data);
-
-        // Redirect ke halaman daftar pasien
-        header('Location: ' . BASEURL . '/staff/janji_temu');
+        header('Location: ' . BASEURL . '/staff/daftar_pasien');
         exit;
     }
 
+    /**
+     * Pencarian pasien berdasarkan filter tertentu
+     */
+    public function search_patients()
+    {
+        $patientModel = $this->model('PatientModel');
+        $patients = $patientModel->searchPatients();
 
+        $data = [
+            "judul" => "Daftar Pasien",
+            "user" => "Staff Pendaftaran",
+            "patients" => $patients,
+        ];
+
+        $this->render('staff/daftar_pasien', $data);
+    }
+
+    /**
+     * Halaman untuk menambah janji temu baru
+     */
     public function tambah_janji_temu()
     {
         $patientsModel = $this->model('PatientModel');
         $doctorsModel = $this->model('DoctorModel');
 
-        $data["judul"] = "Tambah Janji Temu";
-        $data["user"] = "Staff Pendaftaran";
-        $data["patients"] = $patientsModel->getAllPatients();
-        $data["doctors"] = $doctorsModel->getAllDoctors();
+        $data = [
+            "judul" => "Tambah Janji Temu",
+            "user" => "Staff Pendaftaran",
+            "patients" => $patientsModel->getAllPatients(),
+            "doctors" => $doctorsModel->getAllDoctors(),
+        ];
 
         $this->render('staff/tambah_janji_temu', $data);
     }
 
+    /**
+     * Menambah janji temu baru ke dalam database
+     */
     public function addAppointment()
     {
-        $model = $this->model('AppointmentsModel');
+        $appointmentModel = $this->model('AppointmentsModel');
 
-        // Ambil data dari form
         $data = [
             'patient_id' => $_POST['patient_id'],
             'doctor_id' => $_POST['doctor_id'],
-            'appointment_date' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['appointment_date']) * 1000),
-            'start' => $_POST['start_time'], // Masukkan waktu mulai
-            'end' => $_POST['end_time'], // Masukkan waktu berakhir
+            'appointment_date' => new UTCDateTime(strtotime($_POST['appointment_date']) * 1000),
+            'start' => $_POST['start_time'],
+            'end' => $_POST['end_time'],
             'status' => $_POST['status'],
             'notes' => $_POST['notes'],
         ];
 
-        // Simpan janji temu ke database
-        $model->addAppointment($data);
+        $appointmentModel->addAppointment($data);
 
-        // Redirect ke halaman daftar janji temu
         header('Location: ' . BASEURL . '/staff/janji_temu');
         exit;
+    }
+
+    /**
+     * Halaman untuk mengedit janji temu
+     */
+    public function edit_appointment($id)
+    {
+        $appointmentsModel = $this->model('AppointmentsModel');
+        $appointment = $appointmentsModel->getAppointmentById($id);
+
+        if (!$appointment) {
+            header('Location: ' . BASEURL . '/staff/janji_temu');
+            exit;
+        }
+
+        $doctorModel = $this->model('DoctorModel');
+        $patientModel = $this->model('PatientModel');
+
+        $data = [
+            "judul" => "Edit Janji Temu",
+            "user" => "Petugas Pendaftaran",
+            "patients" => $patientModel->getAllPatients(),
+            "doctors" => $doctorModel->getAllDoctors(),
+            "appointments" => $appointment,
+        ];
+
+        $this->render('staff/edit_appointment', $data);
+    }
+
+    /**
+     * Memperbarui janji temu di database
+     */
+    public function updateAppointment()
+    {
+        $appointmentModel = $this->model('AppointmentsModel');
+
+        $data = [
+            'patient_id' => $_POST['patient_id'],
+            'doctor_id' => $_POST['doctor_id'],
+            'appointment_date' => new UTCDateTime(strtotime($_POST['appointment_date']) * 1000),
+            'start_time' => $_POST['start_time'],
+            'end_time' => $_POST['end_time'],
+            'status' => $_POST['status'],
+            'notes' => $_POST['notes'],
+        ];
+
+        $appointmentModel->updateAppointment($_POST['_id'], $data);
+
+        header('Location: ' . BASEURL . '/staff/janji_temu');
+        exit;
+    }
+
+    /**
+     * Menghapus janji temu dari database
+     */
+    public function hapus_appointment($id)
+    {
+        $appointmentModel = $this->model('AppointmentsModel');
+        $appointmentModel->deleteAppointment($id);
+
+        header('Location: ' . BASEURL . '/staff/janji_temu');
+        exit;
+    }
+
+    /**
+     * Pencarian janji temu berdasarkan filter tertentu
+     */
+    public function search_appointment()
+    {
+        $doctorModel = $this->model('DoctorModel');
+        $appointmentModel = $this->model('AppointmentsModel');
+
+        $data = [
+            "judul" => "Janji Temu",
+            "user" => "Petugas Pendaftaran",
+            'doctors' => $doctorModel->getAllDoctors(),
+            "appointments" => $appointmentModel->searchAppointment(),
+        ];
+
+        $this->render('staff/janji_temu', $data);
     }
 }
