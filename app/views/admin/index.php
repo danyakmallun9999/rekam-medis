@@ -17,8 +17,13 @@
     <!-- Sidebar -->
     <aside
         class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        id="sidebar"
         aria-label="Sidebar">
         <div class="h-full px-3 py-4 overflow-y-auto bg-gray-900">
+            <!-- Tambahkan tombol close untuk mobile -->
+            <button class="absolute top-4 right-4 text-white sm:hidden" id="closeSidebar">
+                <i class="fas fa-times"></i>
+            </button>
             <div class="flex items-center pb-4 mb-4 border-b border-gray-700">
                 <img
                     src="https://via.placeholder.com/50"
@@ -75,12 +80,12 @@
     </aside>
 
     <!-- Main Content -->
-    <div class="p-4 sm:ml-64">
+    <div class="p-4 sm:ml-64" id="mainContent">
         <!-- Top Navigation -->
         <nav
             class="bg-white p-4 rounded-lg shadow-sm mb-6 flex justify-between items-center">
             <div class="flex items-center">
-                <button class="sm:hidden mr-4">
+                <button class="sm:hidden mr-4" id="hamburger">
                     <i class="fas fa-bars text-gray-500"></i>
                 </button>
                 <h1 class="text-xl font-semibold">Dashboard Admin</h1>
@@ -275,12 +280,27 @@
     </div>
 
     <script>
-        // Toggle sidebar for mobile
-        document
-            .querySelector("button.sm\\:hidden")
-            .addEventListener("click", function() {
-                document.querySelector("aside").classList.toggle("-translate-x-full");
-            });
+        // Sidebar toggle functionality
+        const sidebar = document.getElementById('sidebar');
+        const hamburger = document.getElementById('hamburger');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const mainContent = document.getElementById('mainContent');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        hamburger.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth < 640) { // sm breakpoint
+                if (!sidebar.contains(e.target) && !hamburger.contains(e.target) && !sidebar.classList.contains('-translate-x-full')) {
+                    toggleSidebar();
+                }
+            }
+        });
 
         // Sample chart
         // const ctx = document.getElementById("userChart").getContext("2d");

@@ -3,7 +3,7 @@
 class App
 {
     // Nilai default untuk controller, method, dan parameter
-    protected $controller = 'admin';    // Controller default adalah 'home'
+    protected $controller = 'login';    // Controller default adalah 'home'
     protected $method = 'index';       // Method default adalah 'index'
     protected $params = [];            // Parameter default adalah array kosong
 
