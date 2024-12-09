@@ -33,9 +33,13 @@
                             name="patient_id"
                             required
                             class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-                            <option value=""><?= $appointment['patient']['name']; ?></option>
+                            <option value="" selected><?= $appointment['patient']['name']; ?></option>
                             <?php foreach ($data["patients"] as $patient): ?>
-                                <option value="<?= $patient['_id']; ?>"><?= $patient['name']; ?></option>
+                                <option
+                                    <?= ($appointment['patient']['_id'] == $patient['_id']) ? 'selected' : ''; ?>
+                                    value="<?= $patient['_id']; ?>">
+                                    <?= $patient['name']; ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -50,9 +54,13 @@
                             name="doctor_id"
                             required
                             class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-                            <option value=""><?= $appointment['doctor']['name']; ?></option>
+                            <option value="" selected><?= $appointment['doctor']['name']; ?></option>
                             <?php foreach ($data['doctors'] as $doctor): ?>
-                                <option value="<?= $doctor['_id']; ?>"><?= $doctor['name']; ?></option>
+                                <option
+                                    <?= ($appointment['doctor']['_id'] == $doctor['_id']) ? 'selected' : ''; ?>
+                                    value="<?= $doctor['_id']; ?>">
+                                    <?= $doctor['name']; ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
 
@@ -75,8 +83,19 @@
                             <label for="date" class="block text-sm font-medium text-gray-700 mb-1">
                                 Tanggal <span class="text-red-500">*</span>
                             </label>
+                            <?php
+                            // Mengambil UTCDateTime dari MongoDB
+                            $appointmentDate = $appointment['appointment_date'];
+
+                            // Konversi UTCDateTime menjadi objek DateTime PHP
+                            $date = $appointmentDate->toDateTime();
+
+                            // Format tanggal menjadi YYYY-MM-DD
+                            $formattedDate = $date->format('Y-m-d');
+                            ?>
                             <input
                                 type="date"
+                                value="<?= $formattedDate ?>"
                                 id="date"
                                 name="appointment_date"
                                 required
@@ -89,6 +108,7 @@
                             </label>
                             <input
                                 type="time"
+                                value="<?= $appointment['appointment_time']['start']; ?>"
                                 id="start_time"
                                 name="start_time"
                                 required
@@ -101,7 +121,7 @@
                             </label>
                             <input
                                 type="time"
-                                value="01-01-01"
+                                value="<?= $appointment['appointment_time']['end']; ?>"
                                 id="end_time"
                                 name="end_time"
                                 required
