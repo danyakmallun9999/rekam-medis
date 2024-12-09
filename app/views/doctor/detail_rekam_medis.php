@@ -59,12 +59,14 @@
     </div>
 
     <!-- Action Buttons -->
-    <div class="flex flex-wrap gap-4 mb-6">
-        <button
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-4 mb-6 no-print">
+        <button onclick="window.print()"
             class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 flex items-center">
             <i class="fas fa-print mr-2"></i>Cetak Catatan
         </button>
     </div>
+
 
     <!-- Medical Records Table -->
     <div class="bg-white rounded-lg shadow-sm overflow-hidden">
