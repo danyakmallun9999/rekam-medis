@@ -1,4 +1,4 @@
-# Sistem Rekam Medis Elektronik (E-MR)
+# Sistem Rekam Medis Elektronik (SRME)
 
 ## Deskripsi Proyek
 
