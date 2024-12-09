@@ -27,20 +27,6 @@
         </div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="flex flex-wrap gap-4 mb-6">
-        <button
-            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center">
-            <i class="fas fa-plus mr-2"></i>
-            Janji Temu Baru
-        </button>
-        <button
-            class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 flex items-center">
-            <i class="fas fa-calendar-day mr-2"></i>
-            Janji Temu Hari Ini
-        </button>
-    </div>
-
     <!-- Calendar and List View Toggle -->
     <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
         <div

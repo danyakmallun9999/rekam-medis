@@ -61,10 +61,6 @@
     <!-- Action Buttons -->
     <div class="flex flex-wrap gap-4 mb-6">
         <button
-            class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 flex items-center">
-            <i class="fas fa-plus mr-2"></i>Tambah Catatan
-        </button>
-        <button
             class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 flex items-center">
             <i class="fas fa-print mr-2"></i>Cetak Catatan
         </button>
@@ -97,70 +93,50 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">MR-2024-001</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">
-                                <div class="font-medium">Dr. Sarah Smith</div>
-                                <div class="text-gray-500">ID: DOC-001</div>
-                                <div class="text-gray-500">Dokter Umum</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">1 Nov 2024</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                Hypertension
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <ul class="text-sm text-gray-900 list-disc list-inside">
-                                <li>Lifestyle modification</li>
-                                <li>Prescription medication</li>
-                            </ul>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">
-                                Patient advised to monitor blood pressure regularly.
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">MR-2024-002</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">
-                                <div class="font-medium">Dr. Sarah Smith</div>
-                                <div class="text-gray-500">ID: DOC-001</div>
-                                <div class="text-gray-500">Dokter Umum</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">15 Nov 2024</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Eczema
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <ul class="text-sm text-gray-900 list-disc list-inside">
-                                <li>Topical corticosteroid</li>
-                                <li>Moisturizer</li>
-                            </ul>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">
-                                Avoid triggers such as harsh soaps and stress.
-                            </div>
-                        </td>
-                    </tr>
+                    <?php foreach ($data['medical_records'] as $medical_record) : ?>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900"><?= $medical_record['_id']; ?></div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="text-sm text-gray-900">
+                                    <div class="font-medium"><?= $medical_record['doctor']['name']; ?></div>
+                                    <div class="text-gray-500">ID: <?= $medical_record['doctor']['_id']; ?></div>
+                                    <div class="text-gray-500"><?= $medical_record['doctor']['specialization']; ?></div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <?php
+                                // Mengambil UTCDateTime dari MongoDB
+                                $appointmentDate = $medical_record['visit_date'];
+
+                                // Konversi UTCDateTime menjadi objek DateTime PHP
+                                $date = $appointmentDate->toDateTime();
+
+                                // Format tanggal menjadi YYYY-MM-DD
+                                $formattedDate = $date->format('Y-m-d');
+                                ?>
+                                <div class="text-sm text-gray-900"><?= $formattedDate; ?></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                    <?= $medical_record['diagnosis']; ?>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <ul class="text-sm text-gray-900 list-disc list-inside">
+                                    <li><?= $medical_record['treatment'][0]; ?></li>
+                                    <li><?= $medical_record['treatment'][1]; ?></li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="text-sm text-gray-900">
+                                    <?= $medical_record['notes']; ?>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

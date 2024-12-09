@@ -47,8 +47,11 @@ class Doctor extends Controller
 
     public function detail_rekam_medis($id)
     {
+        $medicalRecordModel = $this->model('MedicalRecordModel');
         $patientModel = $this->model('PatientModel');
-        $data["patient"] = $patientModel->getPatientById($id);;
+
+        $data["patient"] = $patientModel->getPatientById($id);
+        $data["medical_records"] = $medicalRecordModel->getMedicalRecordById($id);
         $data["judul"] = "Detail Rekam Medis";
         $data["user"] = "Dr. Johan";
         $this->render('doctor/detail_rekam_medis', $data);
