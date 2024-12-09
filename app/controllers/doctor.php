@@ -11,8 +11,13 @@ class Doctor extends Controller
 
     public function index()
     {
+        $patientModel = $this->model('PatientModel');
+        $appointmentModel = $this->model('AppointmentsModel');
+
         $data["judul"] = "Halaman Utama Dokter";
         $data["user"] = "Dr. Johan";
+        $data["patient_count"] = $patientModel->getPatientCount();
+        $data["appointment_count"] = $appointmentModel->getAppointmentsCount();
         $this->render('doctor/index', $data);
     }
 
@@ -32,13 +37,18 @@ class Doctor extends Controller
 
     public function catatan_rekam_medis()
     {
+        $patientModel = $this->model('PatientModel');
         $data["judul"] = "Rekam Medis";
         $data["user"] = "Dr. Johan";
+        $data["patients"] = $patientModel->getAllPatients();
+
         $this->render('doctor/catatan_rekam_medis', $data);
     }
 
-    public function detail_rekam_medis()
+    public function detail_rekam_medis($id)
     {
+        $patientModel = $this->model('PatientModel');
+        $data["patient"] = $patientModel->getPatientById($id);;
         $data["judul"] = "Detail Rekam Medis";
         $data["user"] = "Dr. Johan";
         $this->render('doctor/detail_rekam_medis', $data);

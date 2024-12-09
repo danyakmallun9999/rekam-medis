@@ -27,15 +27,15 @@
                 <div class="space-y-2">
                     <div class="flex justify-between">
                         <span class="text-gray-600">ID Pasien:</span>
-                        <span class="font-medium">PAT-001</span>
+                        <span class="font-medium"><?= $data['patient']['_id']; ?></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-600">Nama:</span>
-                        <span class="font-medium">John Doe</span>
+                        <span class="font-medium"><?= $data['patient']['name']; ?></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-600">Tanggal Lahir:</span>
-                        <span class="font-medium">15 Mei 1990</span>
+                        <span class="font-medium"><?= $data['patient']['birth_date']->toDateTime()->format('d-m-Y'); ?></span>
                     </div>
                 </div>
             </div>
@@ -43,15 +43,15 @@
                 <div class="space-y-2">
                     <div class="flex justify-between">
                         <span class="text-gray-600">Jenis Kelamin:</span>
-                        <span class="font-medium">Laki-laki</span>
+                        <span class="font-medium"><?= $data['patient']['gender']; ?></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-600">No. Telepon:</span>
-                        <span class="font-medium">1234567890</span>
+                        <span class="font-medium"><?= $data['patient']['contact_number']; ?></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-600">Alamat:</span>
-                        <span class="font-medium">123 Maple Street, Springfield</span>
+                        <span class="font-medium"><?= $data['patient']['address']; ?></span>
                     </div>
                 </div>
             </div>

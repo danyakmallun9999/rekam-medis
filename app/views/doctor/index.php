@@ -20,7 +20,7 @@
                 </div>
                 <div class="ml-4">
                     <h3 class="text-gray-500 text-sm">Total Pasien</h3>
-                    <p class="text-2xl font-semibold">248</p>
+                    <p class="text-2xl font-semibold"><?= $data["patient_count"]; ?></p>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="ml-4">
                     <h3 class="text-gray-500 text-sm">Janji Temu Hari Ini</h3>
-                    <p class="text-2xl font-semibold">12</p>
+                    <p class="text-2xl font-semibold"><?= $data["appointment_count"]; ?></p>
                 </div>
             </div>
         </div>
@@ -61,6 +61,24 @@
 
     <!-- Main Navigation Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Janji Temu Card -->
+        <div
+            class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+            <div class="flex flex-col items-center text-center h-full">
+                <div class="p-4 bg-green-100 rounded-full mb-4">
+                    <i class="fas fa-calendar-alt text-green-500 text-4xl"></i>
+                </div>
+                <h2 class="text-xl font-semibold mb-2">Janji Temu</h2>
+                <p class="text-gray-600 mb-4">Atur jadwal konsultasi pasien</p>
+                <a
+                    href="<?= BASEURL; ?>/doctor/janji_temu_pasien"
+                    class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 inline-flex items-center mt-auto">
+                    <span>Lihat Selengkapnya</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+
         <!-- Daftar Pasien Card -->
         <div
             class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
@@ -75,24 +93,6 @@
                 <a
                     href="<?= BASEURL; ?>/doctor/daftar_pasien_diagnosa"
                     class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 inline-flex items-center mt-auto">
-                    <span>Lihat Selengkapnya</span>
-                    <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- Janji Temu Card -->
-        <div
-            class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
-            <div class="flex flex-col items-center text-center h-full">
-                <div class="p-4 bg-green-100 rounded-full mb-4">
-                    <i class="fas fa-calendar-alt text-green-500 text-4xl"></i>
-                </div>
-                <h2 class="text-xl font-semibold mb-2">Janji Temu</h2>
-                <p class="text-gray-600 mb-4">Atur jadwal konsultasi pasien</p>
-                <a
-                    href="<?= BASEURL; ?>/doctor/janji_temu_pasien"
-                    class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 inline-flex items-center mt-auto">
                     <span>Lihat Selengkapnya</span>
                     <i class="fas fa-arrow-right ml-2"></i>
                 </a>
