@@ -21,78 +21,37 @@
             </div>
             <div class="ml-3">
                 <p class="text-sm text-yellow-700">
-                    5 janji temu baru membutuhkan konfirmasi
+                    <?= $data["appointment_count"] ?> janji temu baru membutuhkan konfirmasi
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- Calendar and List View Toggle -->
-    <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
-        <div
-            class="flex flex-col md:flex-row gap-4 justify-between items-center">
-            <div class="flex space-x-2">
-                <button
-                    class="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-200">
-                    <i class="fas fa-calendar-alt mr-2"></i>Kalender
-                </button>
-                <button
-                    class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200">
-                    <i class="fas fa-list mr-2"></i>Daftar
-                </button>
-            </div>
-
-            <!-- Search and Filters -->
-            <div class="flex flex-wrap gap-2">
-                <input
-                    type="text"
-                    placeholder="Cari janji temu..."
-                    class="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500" />
-                <select
-                    class="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
-                    <option>Semua Dokter</option>
-                    <option>Dr. John Doe</option>
-                    <option>Dr. Jane Smith</option>
-                </select>
-                <select
-                    class="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
-                    <option>Semua Status</option>
-                    <option>Dikonfirmasi</option>
-                    <option>Menunggu</option>
-                    <option>Selesai</option>
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <!-- Calendar View -->
-    <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-        <div class="grid grid-cols-7 gap-2">
-            <!-- Calendar Header -->
-            <div class="text-center font-semibold text-gray-600">Min</div>
-            <div class="text-center font-semibold text-gray-600">Sen</div>
-            <div class="text-center font-semibold text-gray-600">Sel</div>
-            <div class="text-center font-semibold text-gray-600">Rab</div>
-            <div class="text-center font-semibold text-gray-600">Kam</div>
-            <div class="text-center font-semibold text-gray-600">Jum</div>
-            <div class="text-center font-semibold text-gray-600">Sab</div>
-
-            <!-- Calendar Days -->
-            <!-- Example of a day with appointments -->
-            <div
-                class="border rounded-lg p-2 min-h-[100px] hover:bg-gray-50 cursor-pointer">
-                <div class="text-right text-gray-500">1</div>
-                <div class="mt-1">
-                    <div class="text-xs bg-blue-100 text-blue-600 rounded p-1 mb-1">
-                        09:00 - John D.
-                    </div>
-                    <div class="text-xs bg-green-100 text-green-600 rounded p-1">
-                        14:30 - Mary S.
+    <!-- Search and Filter Section -->
+    <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+        <form id="searchForm" method="POST" action="<?= BASEURL; ?>/doctor/search_appointment_patients" class="mb-2">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex-1">
+                    <div class="relative">
+                        <input
+                            type="text"
+                            name="search"
+                            id="searchInput"
+                            placeholder="Cari pasien..."
+                            value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>"
+                            class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                     </div>
                 </div>
+                <div class="flex flex-wrap gap-4">
+
+                    <button id="cari" type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
+                        <i class="fas fa-search mr-2"></i>Cari
+                    </button>
+                </div>
             </div>
-            <!-- More calendar days... -->
-        </div>
+        </form>
+
     </div>
 
     <!-- Appointments Table -->
@@ -101,10 +60,6 @@
             <table class="w-full">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                            No. Janji
-                        </th>
                         <th
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                             Pasien
@@ -128,62 +83,45 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">
-                                JT-2024-001
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10">
-                                    <img
-                                        class="h-10 w-10 rounded-full"
-                                        src="https://via.placeholder.com/40"
-                                        alt="" />
+                    <?php foreach ($data['appointments'] as $appointment) : ?>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900">
+                                    <?= $appointment['patient']['name']; ?>
                                 </div>
-                                <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">
-                                        John Smith
-                                    </div>
-                                    <div class="text-sm text-gray-500">Pemeriksaan Rutin</div>
+                                <div class="text-sm text-gray-500"><?= $appointment['patient']['_id']; ?></div>
+
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900"><?= date('l, d F Y', strtotime($appointment['appointment_date']->toDateTime()->format('Y-m-d'))); ?></div>
+                                <div class="text-sm text-gray-500"><?= $appointment['appointment_time']['start']; ?></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900"><?= $appointment['doctor']['name']; ?></div>
+                                <div class="text-sm text-gray-500"><?= $appointment['doctor']['specialization']; ?></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                    <?= $appointment['status']; ?>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <button
+                                        class="text-blue-600 hover:text-blue-900"
+                                        title="Konfirmasi">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button
+                                        class="text-red-600 hover:text-red-900"
+                                        title="Batalkan">
+                                        <i class="fas fa-times"></i>
+                                    </button>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">20 Mar 2024</div>
-                            <div class="text-sm text-gray-500">09:00 WIB</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">Dr. Sarah Smith</div>
-                            <div class="text-sm text-gray-500">Dokter Umum</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                Menunggu Konfirmasi
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <button
-                                    class="text-blue-600 hover:text-blue-900"
-                                    title="Konfirmasi">
-                                    <i class="fas fa-check"></i>
-                                </button>
-                                <button
-                                    class="text-yellow-600 hover:text-yellow-900"
-                                    title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button
-                                    class="text-red-600 hover:text-red-900"
-                                    title="Batalkan">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

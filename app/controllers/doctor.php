@@ -30,6 +30,12 @@ class Doctor extends Controller
 
     public function janji_temu_pasien()
     {
+        $doctorModel = $this->model('DoctorModel');
+        $appointmentModel = $this->model('AppointmentsModel');
+
+        $data["doctors"] = $doctorModel->getAllDoctors();
+        $data["appointments"] = $appointmentModel->getAppointments();
+        $data["appointment_count"] = $appointmentModel->getAppointmentsCount();
         $data["judul"] = "Janji Temu";
         $data["user"] = "Dr. Johan";
         $this->render('doctor/janji_temu_pasien', $data);
@@ -44,6 +50,38 @@ class Doctor extends Controller
 
         $this->render('doctor/catatan_rekam_medis', $data);
     }
+
+    public function search_patients()
+    {
+        $patientModel = $this->model('PatientModel');
+        $patients = $patientModel->searchPatients();
+
+        $data = [
+            "judul" => "Rekam Medis",
+            "user" => "Dr. Johan",
+            "patients" => $patients,
+        ];
+
+        $this->render('doctor/catatan_rekam_medis', $data);
+    }
+
+    public function search_appointment_patients()
+    {
+        $appointmentModel = $this->model('AppointmentsModel');
+        $appointments = $appointmentModel->searchAppointment();
+
+        $data = [
+            "judul" => "Daftar Pasien",
+            "user" => "Staff Pendaftaran",
+            "appointments" => $appointments,
+        ];
+        $data["appointment_count"] = $appointmentModel->getAppointmentsCount();
+        $data["judul"] = "Janji Temu";
+        $data["user"] = "Dr. Johan";
+
+        $this->render('doctor/janji_temu_pasien', $data);
+    }
+
 
     public function detail_rekam_medis($id)
     {
