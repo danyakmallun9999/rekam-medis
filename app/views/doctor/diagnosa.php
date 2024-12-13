@@ -8,8 +8,8 @@
             <li><i class="fas fa-chevron-right text-gray-400 mx-2"></i></li>
             <li>
                 <a
-                    href="<?= BASEURL; ?>/doctor/daftar_pasien_diagnosa"
-                    class="text-gray-500 hover:text-gray-700">Daftar Pasien</a>
+                    href="<?= BASEURL; ?>/doctor/janji_temu_pasien"
+                    class="text-gray-500 hover:text-gray-700">Janji Temu</a>
             </li>
             <li><i class="fas fa-chevron-right text-gray-400 mx-2"></i></li>
             <li class="text-blue-600">Diagnosa</li>

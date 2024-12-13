@@ -107,6 +107,14 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="<?= BASEURL; ?>/doctor/diagnosa">
+                                    <button
+                                        class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600">
+                                        Diagnosa
+                                    </button>
+                                </a>
+                            </td>
+                            <!-- <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <div class="flex space-x-2">
                                     <button
                                         class="text-blue-600 hover:text-blue-900"
@@ -119,7 +127,7 @@
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
