@@ -15,39 +15,31 @@
 
     <!-- Main Content -->
     <div class=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    <div class="flex flex-wrap gap-4 mb-6">
-                        <button
-                            class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 flex items-center">
-                            <i class="fas fa-calendar-check mr-2"></i>
-                            Jadwal Hari Ini
-                        </button>
-                    </div>
-
                     <!-- Search and Filter Section -->
-                    <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
-                        <div
-                            class="flex flex-col md:flex-row gap-4 justify-between items-center">
-                            <!-- Search Bar -->
-                            <div class="relative w-full md:w-96">
-                                <input
-                                    type="text"
-                                    placeholder="Cari pasien..."
-                                    class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
-                                <div class="absolute left-3 top-2.5 text-gray-400">
-                                    <i class="fas fa-search"></i>
+                    <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+                        <form id="searchForm" method="POST" action="<?= BASEURL; ?>/doctor/search_patients" class="mb-2">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                <div class="flex-1">
+                                    <div class="relative">
+                                        <input
+                                            type="text"
+                                            name="search"
+                                            id="searchInput"
+                                            placeholder="Cari pasien..."
+                                            value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>"
+                                            class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-4">
+
+                                    <button id="cari" type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
+                                        <i class="fas fa-search mr-2"></i>Cari
+                                    </button>
                                 </div>
                             </div>
+                        </form>
 
-                            <!-- Filters -->
-                            <div class="flex flex-wrap gap-2 w-full md:w-auto">
-                                <select
-                                    class="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
-                                    <option value="">Semua Status</option>
-                                    <option>Hadir</option>
-                                    <option>Belum Hadir</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Patients Table -->
@@ -74,10 +66,6 @@
                                         </th>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Status
-                                        </th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Aksi
                                         </th>
                                     </tr>
@@ -91,19 +79,11 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center">
-                                                <div class="flex-shrink-0 h-10 w-10">
-                                                    <img
-                                                        class="h-10 w-10 rounded-full"
-                                                        src="https://via.placeholder.com/40"
-                                                        alt="" />
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">
+                                                    John Smith
                                                 </div>
-                                                <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">
-                                                        John Smith
-                                                    </div>
-                                                    <div class="text-sm text-gray-500">35 Tahun</div>
-                                                </div>
+                                                <div class="text-sm text-gray-500">35 Tahun</div>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -114,12 +94,7 @@
                                             <div class="text-sm text-gray-900">09:00 WIB</div>
                                             <div class="text-sm text-gray-500">20 Mar 2024</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                Hadir
-                                            </span>
-                                        </td>
+
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <a href="<?= BASEURL; ?>/doctor/diagnosa">
                                                 <button
