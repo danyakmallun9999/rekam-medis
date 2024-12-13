@@ -60,7 +60,7 @@
     </div>
 
     <!-- Main Navigation Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Janji Temu Card -->
         <div
             class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
@@ -80,7 +80,7 @@
         </div>
 
         <!-- Daftar Pasien Card -->
-        <div
+        <!-- <div
             class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
             <div class="flex flex-col items-center text-center h-full">
                 <div class="p-4 bg-blue-100 rounded-full mb-4">
@@ -97,7 +97,7 @@
                     <i class="fas fa-arrow-right ml-2"></i>
                 </a>
             </div>
-        </div>
+        </div> -->
 
         <!-- Catatan Medis Card -->
         <div
