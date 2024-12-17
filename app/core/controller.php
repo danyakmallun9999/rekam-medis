@@ -20,6 +20,16 @@ class Controller
         $this->view('templates/footer');
     }
 
+    public function renderAdmin($view, $data = [])
+    {
+        $this->view('templates/adminHeader', $data);
+        $this->view('templates/adminSidebar', $data);
+        $this->view('templates/adminNav', $data);
+        $this->view($view, $data);
+        $this->view('templates/adminFooter');
+    }
+
+
     public function model($model)
     {
         require_once '../app/models/' . $model . '.php';
