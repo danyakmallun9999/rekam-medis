@@ -12,7 +12,7 @@ class Admin extends Controller
     public function index()
     {
         $data['title'] = 'Admin Dashboard';
-        $this->view('admin/index', $data);
+        $this->renderAdmin('admin/index', $data);
     }
 
     public function manageUsers()
