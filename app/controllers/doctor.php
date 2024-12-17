@@ -14,17 +14,23 @@ class Doctor extends Controller
         $patientModel = $this->model('PatientModel');
         $appointmentModel = $this->model('AppointmentsModel');
 
-        $data["judul"] = "Halaman Utama Dokter";
-        $data["user"] = "Dr. Johan";
-        $data["patient_count"] = $patientModel->getPatientCount();
-        $data["appointment_count"] = $appointmentModel->getAppointmentsCount();
+        $data = [
+            "judul" => "Halaman Utama Dokter",
+            "user" => "Dr. Johan",
+            "patient_count" => $patientModel->getPatientCount(),
+            "appointment_count" => $appointmentModel->getAppointmentsCount(),
+        ];
+
         $this->render('doctor/index', $data);
     }
 
     public function daftar_pasien_diagnosa()
     {
-        $data["judul"] = "Daftar Pasien";
-        $data["user"] = "Dr. Johan";
+        $data = [
+            "judul" => "Daftar Pasien",
+            "user" => "Dr. Johan",
+        ];
+
         $this->render('doctor/daftar_pasien_diagnosa', $data);
     }
 
@@ -33,20 +39,26 @@ class Doctor extends Controller
         $doctorModel = $this->model('DoctorModel');
         $appointmentModel = $this->model('AppointmentsModel');
 
-        $data["doctors"] = $doctorModel->getAllDoctors();
-        $data["appointments"] = $appointmentModel->getAppointments();
-        $data["appointment_count"] = $appointmentModel->getAppointmentsCount();
-        $data["judul"] = "Janji Temu";
-        $data["user"] = "Dr. Johan";
+        $data = [
+            "doctors" => $doctorModel->getAllDoctors(),
+            "appointments" => $appointmentModel->getAppointments(),
+            "appointment_count" => $appointmentModel->getAppointmentsCount(),
+            "judul" => "Janji Temu",
+            "user" => "Dr. Johan",
+        ];
+
         $this->render('doctor/janji_temu_pasien', $data);
     }
 
     public function catatan_rekam_medis()
     {
         $patientModel = $this->model('PatientModel');
-        $data["judul"] = "Rekam Medis";
-        $data["user"] = "Dr. Johan";
-        $data["patients"] = $patientModel->getAllPatients();
+
+        $data = [
+            "judul" => "Rekam Medis",
+            "user" => "Dr. Johan",
+            "patients" => $patientModel->getAllPatients(),
+        ];
 
         $this->render('doctor/catatan_rekam_medis', $data);
     }
@@ -71,34 +83,37 @@ class Doctor extends Controller
         $appointments = $appointmentModel->searchAppointment();
 
         $data = [
-            "judul" => "Daftar Pasien",
-            "user" => "Staff Pendaftaran",
+            "judul" => "Janji Temu",
+            "user" => "Dr. Johan",
             "appointments" => $appointments,
+            "appointment_count" => $appointmentModel->getAppointmentsCount(),
         ];
-        $data["appointment_count"] = $appointmentModel->getAppointmentsCount();
-        $data["judul"] = "Janji Temu";
-        $data["user"] = "Dr. Johan";
 
         $this->render('doctor/janji_temu_pasien', $data);
     }
-
 
     public function detail_rekam_medis($id)
     {
         $medicalRecordModel = $this->model('MedicalRecordModel');
         $patientModel = $this->model('PatientModel');
 
-        $data["patient"] = $patientModel->getPatientById($id);
-        $data["medical_records"] = $medicalRecordModel->getMedicalRecordById($id);
-        $data["judul"] = "Detail Rekam Medis";
-        $data["user"] = "Dr. Johan";
+        $data = [
+            "patient" => $patientModel->getPatientById($id),
+            "medical_records" => $medicalRecordModel->getMedicalRecordById($id),
+            "judul" => "Detail Rekam Medis",
+            "user" => "Dr. Johan",
+        ];
+
         $this->render('doctor/detail_rekam_medis', $data);
     }
 
     public function diagnosa()
     {
-        $data["judul"] = "Diagnosa";
-        $data["user"] = "Dr. Johan";
+        $data = [
+            "judul" => "Diagnosa",
+            "user" => "Dr. Johan",
+        ];
+
         $this->render('doctor/diagnosa', $data);
     }
 }
