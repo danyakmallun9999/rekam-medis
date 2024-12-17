@@ -208,16 +208,73 @@ module.exports = {
 ```graphql
 emr-system/
 ├── app/
-│ ├── controllers/
-│ ├── models/
-│ ├── views/
-│ └── config/
+│   ├── config/
+│   │   ├── config.php
+│   │   └── database.php
+│   │
+│   ├── controllers/
+│   │   ├── admin.php
+│   │   ├── doctor.php
+│   │   ├── login.php
+│   │   ├── staff.php
+│   │   └── unauthorized.php
+│   │
+│   ├── core/
+│   │   ├── app.php
+│   │   └── controller.php
+│   │
+│   ├── models/
+│   │   ├── DoctorModel.php
+│   │   ├── PatientModel.php
+│   │   └── UserModel.php
+│   │
+│   └── views/
+│       ├── admin/
+│       │   ├── index.php
+│       │   ├── manage_users.php
+│       │   ├── reports.php
+│       │   └── settings.php
+│       │
+│       ├── doctor/
+│       │   ├── catatan_rekam_medis.php
+│       │   ├── daftar_pasien_diagnosa.php
+│       │   ├── detail_rekam_medis.php
+│       │   ├── diagnosa.php
+│       │   └── index.php
+│       │
+│       ├── login/
+│       │   └── index.php
+│       │
+│       ├── staff/
+│       │   ├── daftar_pasien.php
+│       │   ├── index.php
+│       │   └── janji_temu.php
+│       │
+│       ├── templates/
+│       │   ├── adminFooter.php
+│       │   ├── adminHeader.php
+│       │   ├── adminNav.php
+│       │   ├── adminSidebar.php
+│       │   ├── footer.php
+│       │   ├── header.php
+│       │   └── nav.php
+│       │
+│       └── unauthorized/
+│           └── index.php
+│
 ├── public/
-│ ├── css/
-│ ├── js/
-│ └── index.php
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   ├── .htaccess
+│   └── index.php
+│
 ├── vendor/
-└── node_modules/
+├── node_modules/
+├── .gitignore
+├── composer.json
+├── package.json
+└── README.md
 ```
 
 ## Penggunaan
