@@ -19,17 +19,23 @@ class Admin extends Controller
     {
         // Ambil data pengguna dari MongoDB
         // Render view manajemen pengguna
+        $data['title'] = 'Kelola Pengguna';
+        $this->renderAdmin('admin/manage_users', $data);
     }
 
     public function reports()
     {
         // Ambil data laporan dari MongoDB
         // Render view laporan
+        $data['title'] = 'Laporan';
+        $this->renderAdmin('admin/reports', $data);
     }
 
     public function settings()
     {
         // Ambil pengaturan saat ini dari MongoDB
         // Render view pengaturan
+        $data['title'] = 'Laporan';
+        $this->renderAdmin('admin/settings', $data);
     }
 }
