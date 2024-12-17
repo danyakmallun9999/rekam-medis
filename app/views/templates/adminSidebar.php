@@ -21,7 +21,7 @@
             <ul class="space-y-2">
                 <li>
                     <a
-                        href="#"
+                        href="<?= BASEURL ?>/admin/"
                         class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700">
                         <i class="fas fa-dashboard w-6"></i>
                         <span>Dashboard</span>
@@ -29,7 +29,7 @@
                 </li>
                 <li>
                     <a
-                        href="#"
+                        href="<?= BASEURL ?>/admin/manageUsers"
                         class="flex items-center p-2 text-gray-400 rounded-lg hover:bg-gray-700">
                         <i class="fas fa-users w-6"></i>
                         <span>Manajemen Pengguna</span>
@@ -37,15 +37,7 @@
                 </li>
                 <li>
                     <a
-                        href="#"
-                        class="flex items-center p-2 text-gray-400 rounded-lg hover:bg-gray-700">
-                        <i class="fas fa-user-md w-6"></i>
-                        <span>Manajemen Dokter</span>
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="#"
+                        href="<?= BASEURL ?>/admin/reports"
                         class="flex items-center p-2 text-gray-400 rounded-lg hover:bg-gray-700">
                         <i class="fas fa-chart-bar w-6"></i>
                         <span>Laporan</span>
@@ -53,7 +45,7 @@
                 </li>
                 <li>
                     <a
-                        href="#"
+                        href="<?= BASEURL ?>/admin/settings"
                         class="flex items-center p-2 text-gray-400 rounded-lg hover:bg-gray-700">
                         <i class="fas fa-cog w-6"></i>
                         <span>Pengaturan</span>
