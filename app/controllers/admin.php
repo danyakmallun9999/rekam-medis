@@ -14,4 +14,22 @@ class Admin extends Controller
         $data['title'] = 'Admin Dashboard';
         $this->view('admin/index', $data);
     }
+
+    public function manageUsers()
+    {
+        // Ambil data pengguna dari MongoDB
+        // Render view manajemen pengguna
+    }
+
+    public function reports()
+    {
+        // Ambil data laporan dari MongoDB
+        // Render view laporan
+    }
+
+    public function settings()
+    {
+        // Ambil pengaturan saat ini dari MongoDB
+        // Render view pengaturan
+    }
 }
